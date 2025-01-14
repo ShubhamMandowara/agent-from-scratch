@@ -1,42 +1,9 @@
 from ollama import chat
 from ollama import ChatResponse
-import yfinance as yf
 import pandas as pd
 import streamlit as st
-
-
-def get_stock_prices(symbol:str, duration:str) -> pd.DataFrame:
-    """Get stock prices from yahoo finance api
-    Args:
-        symbol (str): stock symbol
-        duration (str): time duration
-    Returns:
-        pd.DataFrame: stock prices
-    """
-    suffix='.NS'
-    durations = {'1 year': '1y', '1month': '1mo', '1 month': '1mo', '1M': '1mo', '1year': '1y'}
-    if duration not in durations:
-       durations[duration] = duration
-    try:
-            stock = yf.Ticker(symbol+suffix)
-            data = stock.history(period=durations[duration])
-            return data
-    except Exception as e:
-        return None
-
-
-def current_pe_ratio(symbol:str,) -> int:
-   """Get current pe ratio for a stock
-   Args:
-    symbol (str): stock symbol
-    
-   Returns:
-    int: current pe ratio
-   """
-   suffix = '.NS'
-   stock = yf.Ticker(symbol+suffix)
-   return stock.info.get('trailingPE', None)
-
+from tools import (get_address1, get_beta, get_marketcap, get_current_price, get_stock_prices, current_pe_ratio, get_52_week_high,
+                    get_52_week_low,get_current_ratio, get_debt_to_equity, get_free_cash_flow, get_eps, get_price_to_book)
 
 
 st.title('AI Stock Data Retriever')
@@ -52,12 +19,25 @@ if st.button('Query'):
             available_functions = {
             'get_stock_prices': get_stock_prices,
             'current_pe_ratio': current_pe_ratio,
+            'get_current_price': get_current_price,
+            'get_marketcap': get_marketcap,
+            'get_beta': get_beta,
+            'get_address': get_address1,
+            'get_52_week_high':get_52_week_high,
+            'get_52_week_low':get_52_week_low,
+            'get_current_ratio':get_current_ratio,
+            'get_debt_to_equity':get_debt_to_equity,
+            'get_free_cash_flow':get_free_cash_flow,
+            'get_eps':get_eps, 
+            'get_price_to_book':get_price_to_book
+
             }
 
             response: ChatResponse = chat(
             'llama3.2:1b',
             messages=messages,
-            tools=[get_stock_prices, current_pe_ratio],
+            tools=[get_stock_prices, current_pe_ratio, get_current_price, get_marketcap, get_beta, get_address1, get_52_week_high, get_52_week_low,
+                    get_current_ratio, get_debt_to_equity, get_free_cash_flow, get_eps, get_price_to_book]
             )
 
             if response.message.tool_calls:
@@ -73,18 +53,12 @@ if st.button('Query'):
                         else:
                             st.write(output)
                         print('Function output:', output)
+                        messages.append(response.message)
+                        messages.append({'role': 'tool', 'function output:': str(output), 'name': tool.function.name})
+
+                        # Get final response from model with function outputs
+                        final_response = chat('llama3.2:1b', messages=messages)
+                        st.write(final_response.message.content)
+                        print('Final response:', final_response.message.content)
                     else:
                         print('Function', tool.function.name, 'not found')
-
-            # Only needed to chat with the model using the tool call results
-            if response.message.tool_calls:
-                # Add the function response to messages for the model to use
-                messages.append(response.message)
-                messages.append({'role': 'tool', 'content': str(output), 'name': tool.function.name})
-
-                # Get final response from model with function outputs
-                final_response = chat('llama3.2:1b', messages=messages)
-                print('Final response:', final_response.message.content)
-
-            else:
-                print('No tool calls returned from model')
