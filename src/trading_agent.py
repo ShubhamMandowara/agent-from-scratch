@@ -2,6 +2,7 @@ from ollama import chat
 from ollama import ChatResponse
 import pandas as pd
 import streamlit as st
+import plotly.express as px
 from tools import (get_address1, get_beta, get_marketcap, get_current_price, get_stock_prices, current_pe_ratio, get_52_week_high,
                     get_52_week_low,get_current_ratio, get_debt_to_equity, get_free_cash_flow, get_eps, get_price_to_book)
 
@@ -49,6 +50,10 @@ if st.button('Query'):
                         print('Arguments:', tool.function.arguments)
                         output = function_to_call(**tool.function.arguments)
                         if type(output) == pd.DataFrame:
+                            output.reset_index(inplace=True)
+                            fig = px.line(output, x="Date", y="Close")
+                            fig.update_yaxes(range=[output['Close'].min(), output['Close'].max()]) 
+                            st.plotly_chart(fig)
                             st.dataframe(output)
                         else:
                             st.write(output)

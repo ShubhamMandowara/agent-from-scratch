@@ -32,7 +32,7 @@ def get_current_price(symbol:str) -> float:
     Return:
         float: price
     """
-    return get_parameter(symbol, 'currentPrice')
+    return f"Current Price of {symbol} : {get_parameter(symbol, 'currentPrice')}"
 
 
 def get_marketcap(symbol:str) -> float:
@@ -42,7 +42,7 @@ def get_marketcap(symbol:str) -> float:
     Return:
         float: price
     """
-    return get_parameter(symbol, 'marketCap')
+    return f"MarketCap  of {symbol}: {get_parameter(symbol, 'marketCap')}"
 
 def get_beta(symbol:str) -> float:
     """Retrieve the beta
@@ -51,7 +51,7 @@ def get_beta(symbol:str) -> float:
     Return:
         float: price
     """
-    return get_parameter(symbol, 'beta')
+    return f"Beta  of {symbol}:{get_parameter(symbol, 'beta')}"
 
 def get_stock_prices(symbol:str, duration:str) -> pd.DataFrame:
     """Get stock prices from yahoo finance api
@@ -81,9 +81,9 @@ def current_pe_ratio(symbol:str) -> int:
    Returns:
     int: current pe ratio
    """
-   return get_parameter(symbol, 'trailingPE')
+   return f"Current PE ratio of {symbol} : {get_parameter(symbol, 'trailingPE')}"
 
-import yfinance as yf
+
 
 def get_52_week_low(symbol: str) -> float:
     """Retrieve the 52 week low price
@@ -92,7 +92,7 @@ def get_52_week_low(symbol: str) -> float:
     Return:
         float: 52week low price
     """
-    return get_parameter(symbol, 'fiftyTwoWeekLow')
+    return f"52 week low price of {symbol} : {get_parameter(symbol, 'fiftyTwoWeekLow')}"
 
 def get_52_week_high(symbol: str):
     """Retrieve the debt-to-equity
@@ -101,7 +101,7 @@ def get_52_week_high(symbol: str):
     Return:
         float: 52 week high prices
     """
-    return get_parameter(symbol, 'fiftyTwoWeekHigh')
+    return f"52 week high price of {symbol}: {get_parameter(symbol, 'fiftyTwoWeekHigh')}"
 
 def get_price_to_book(symbol: str):
     """Retrieve the price to book value
@@ -110,7 +110,7 @@ def get_price_to_book(symbol: str):
     Return:
         float: price to book value
     """
-    return get_parameter(symbol, 'priceToBook')
+    return f"Price to book value of {symbol} : {get_parameter(symbol, 'priceToBook')}"
 
 def get_eps(symbol: str) -> float:
     """Retrieve the get EPS
@@ -119,7 +119,7 @@ def get_eps(symbol: str) -> float:
     Return:
         float: EPS
     """
-    return get_parameter(symbol, 'trailingEps')
+    return f"EPS of {symbol} : {get_parameter(symbol, 'trailingEps')}"
 
 def get_current_ratio(symbol: str)-> float:
     """Retrieve the current ratio
@@ -128,7 +128,7 @@ def get_current_ratio(symbol: str)-> float:
     Return:
         float: current ratio
     """
-    return get_parameter(symbol, 'currentRatio')
+    return f"Current ratio of {symbol}: {get_parameter(symbol, 'currentRatio')}"
 
 def get_debt_to_equity(symbol: str)-> float:
     """Retrieve the debt-to-equity
@@ -137,7 +137,7 @@ def get_debt_to_equity(symbol: str)-> float:
     Return:
         float: debt to equity
     """
-    return get_parameter(symbol, 'debtToEquity')
+    return f"Debt to equity of {symbol} : {get_parameter(symbol, 'debtToEquity')}"
 
 def get_free_cash_flow(symbol: str):
     """Retrieve the free cash flow
@@ -146,4 +146,4 @@ def get_free_cash_flow(symbol: str):
     Return:
         float: cashflow
     """
-    return get_parameter(symbol, 'freeCashflow')
+    return f"Free cashflow of {symbol} : {get_parameter(symbol, 'freeCashflow')}"

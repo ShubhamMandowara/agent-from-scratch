@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "agent-from-scratch"
+name = "agents-from-scratch"
 version = "0.1.0"
 description = ""
 authors = ["shubhammandowara <shubham77mandowara@gmail.com>"]
