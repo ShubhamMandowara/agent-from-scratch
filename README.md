@@ -9,6 +9,8 @@ The **AI Stock Data Retriever** is a Streamlit application that integrates with 
 - **PE Ratio Retrieval**: Get the current Price-to-Earnings ratio of a stock.
 - **Streamlit Integration**: A user-friendly interface for query input and displaying results.
 
+### Snaps:
+![1 year price](screenshots/1.png)
 ---
 
 ### Setup Instructions
