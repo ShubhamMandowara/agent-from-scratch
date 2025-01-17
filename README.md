@@ -11,6 +11,10 @@ The **AI Stock Data Retriever** is a Streamlit application that integrates with 
 
 ### Snaps:
 ![1 year price](screenshots/1.png)
+![2](screenshots/2.png)
+![3](screenshots/3.png)
+![4](screenshots/4.png)
+![5](screenshots/5.png)
 ---
 
 ### Setup Instructions
