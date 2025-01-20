@@ -31,7 +31,7 @@ The **AI Stock Data Retriever** is a Streamlit application that integrates with 
 #### Starting the App
 1. Run the Streamlit app:
    ```bash
-   streamlit run main.py
+   streamlit run src/trading_agent.py
    ```
 2. Open the provided URL in your browser to interact with the app.
 
